@@ -1,0 +1,132 @@
+﻿@model IEnumerable<CarDealerCapstone.Context.CarModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Make)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Model)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Year)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Color)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Make)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Model)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Year)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Color)
+            </td>
+            <td>
+               
+                @Html.ActionLink("Details", "Details", new {  id=item.Id  }) |
+               
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+<form action="/Home/Search" method="post">
+    <label>Make</label>
+    @{
+        var make = new List<string>() {"All" };
+        @foreach (var item in Model)
+        {
+            if (!make.Contains(item.Make))
+            {
+                make.Add(item.Make);
+            }
+        }
+    }
+    <select name="Make">
+        @foreach (var item in make)
+        {
+            <option value="@item">@item</option>
+        }
+    </select>
+
+    <label>Model</label>
+    @{
+        var carModel = new List<string>(){"All" };
+        @foreach (var item in Model)
+        {
+            if (!carModel.Contains(item.Model))
+            {
+                carModel.Add(item.Model);
+            }
+        }
+    }
+    <select name="Model">
+        @foreach (var item in carModel)
+        {
+            <option value="@item">@item</option>
+        }
+    </select>
+
+    <label>Color</label>
+    @{
+        var Color = new List<string>(){"All" };
+        @foreach (var item in Model)
+        {
+            if (!Color.Contains(item.Color))
+            {
+                Color.Add(item.Color);
+            }
+        }
+    }
+    <select name="Color">
+        @foreach (var item in Color)
+        {
+            <option value="@item">@item</option>
+        }
+    </select>
+
+    <label>Year</label>
+    @{
+        var Year = new List<int>(){0000};
+        @foreach (var item in Model)
+        {
+            if (!Year.Contains(item.Year))
+            {
+                Year.Add(item.Year);
+            }
+        }
+    }
+    <select name="Year">
+        @foreach (var item in Year)
+        {
+            <option value=@item>@item</option>
+        }
+    </select>
+    <input type="submit" value="Search" />
+</form>
+
